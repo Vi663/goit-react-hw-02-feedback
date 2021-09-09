@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { FeedbackOptions  } from '../Buttons/FeedbackOptions ';
-import { Statistics } from '../FeedbackSection/Statistics';
+import { FeedbackOptions  } from '../FeedbackOptions/FeedbackOptions';
+import { Statistics } from '../Statistics/Statistics';
 import { MainContainer } from '../MainContainer/MainContainer'
 import { Section } from '../Section/Section';
 import { Notification } from '../Notification/Notification';
-import s from './App.module.css'
 
 export class App extends Component {
 
@@ -30,30 +29,27 @@ export class App extends Component {
 
   render() {
     const {good, neutral, bad} = this.state;
-    const persentage = this.countPositiveFeedbackPercentage();
+    const percentage = this.countPositiveFeedbackPercentage();
     const total = this.countTotalFeedback();
+    const options = Object.keys(this.state);
     return (
       <MainContainer>
-        <h2 className={s.header}>Please leave feedback</h2>
+        <Section title='Please leave feedback'>
+          <FeedbackOptions
+            options={options}
+            onHandleClick={this.handleClick}/>
+        </Section>
         
-        <FeedbackOptions 
-          options={this.state}
-          onHandleClick={
-            this.handleClick
-          }
-        />
         {total ? (
           <Section title='Statistics'>
           <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
+            statistics={this.state}
             total={total}
-            positivePercentage={persentage}
+            positivePercentage={percentage}
           />
         </Section>
         )
-        : <Notification message="No feedback given"></Notification>}
+        : <Notification message="No feedback given"/>}
       </MainContainer>
     );
   }

@@ -1,7 +1,7 @@
-import s from './MainContainer.module.css';
+import React from 'react';
 
 export const MainContainer = ({ children }) => {
   return (
-    <div className={s.mainContainer}>{children}</div>
+    <div>{children}</div>
   )
 }
